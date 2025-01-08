@@ -18,12 +18,20 @@ provider "opnsense" {
   allow_insecure = true
 }
 
+resource "opnsense_interfaces_vlan" "k8_vlan" {
+  device = "K8"
+  description = "K8 VLAN"
+  tag = 8
+  priority = 0
+  parent = "vtnet0"
+}
+
 resource "opnsense_kea_subnet" "k8_subnet" {
-  subnet = var.subnet_id
+  subnet = var.subnet_ip
   description = var.subnet_desc
   
   pools = [
-    var.subnet_poll
+    var.subnet_pool
   ]
 
 }
